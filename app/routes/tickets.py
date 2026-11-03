@@ -195,7 +195,7 @@ async def update_ticket(
         )
     if updated is None:
         return redirect("/tickets", flash=("error", NOT_FOUND))
-    return redirect(f"/tickets/{tid}", flash=("success", "Изменения сохранены."))
+    return redirect("/tickets", flash=("success", f"Изменения в заявке «{_short(updated['title'])}» сохранены."))
 
 
 # --- Быстрая смена статуса из списка -------------------------------------------

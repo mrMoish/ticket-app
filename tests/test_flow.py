@@ -136,8 +136,13 @@ def test_edit_ticket_and_persist(client):
         f"/tickets/{tid}",
         data={"title": "Новое название", "description": "Другое описание", "category": "report", "status": "in_progress"},
     )
-    assert "Изменения сохранены" in r.text and "Новое название" in r.text
-    assert '<option value="in_progress" selected>' in r.text and '<option value="report" selected>' in r.text
+    # после «Сохранить» пользователь оказывается в списке всех заявок
+    assert r.url.path == "/tickets" and "Мои заявки" in r.text
+    assert "сохранены" in r.text and "Новое название" in r.text
+    assert '<option value="in_progress" selected>' in r.text
+    # данные действительно сохранились: страница редактирования показывает новые значения и цвет статуса
+    page = client.get(f"/tickets/{tid}").text
+    assert 'class="status-select status-in_progress"' in page and '<option value="report" selected>' in page
 
     r = client.post(f"/tickets/{tid}", data={"title": "", "description": "x", "category": "bot", "status": "new"})
     assert r.status_code == 422 and "Введите название" in r.text

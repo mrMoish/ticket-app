@@ -52,7 +52,8 @@
       {% if is_edit %}
       <label class="field">
         <span class="field__label">Статус</span>
-        <select name="status" required {% if errors.status %}aria-invalid="true" aria-describedby="err-status"{% endif %}>
+        <select name="status" required class="status-select status-{{ form.status }}" data-colorize
+                {% if errors.status %}aria-invalid="true" aria-describedby="err-status"{% endif %}>
           {% for code, label in statuses.items() %}
           <option value="{{ code }}" {% if code == form.status %}selected{% endif %}>{{ label }}</option>
           {% endfor %}

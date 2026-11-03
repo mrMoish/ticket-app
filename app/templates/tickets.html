@@ -38,12 +38,13 @@
       <th scope="col">Категория</th>
       <th scope="col">Создана</th>
       <th scope="col">Статус</th>
+      <th scope="col" class="tickets__actions-head">Действия</th>
     </tr>
   </thead>
   <tbody>
     {% for t in tickets %}
     <tr>
-      <td data-label="Название" class="tickets__title"><a href="/tickets/{{ t.id }}">{{ t.title }}</a></td>
+      <td data-label="Название" class="tickets__title">{{ t.title }}</td>
       <td data-label="Категория">{{ categories.get(t.category, t.category) }}</td>
       <td data-label="Создана"><time data-local datetime="{{ t.created_at|dt_iso }}">{{ t.created_at|dt_text }}</time></td>
       <td data-label="Статус">
@@ -58,6 +59,9 @@
           </select>
           <noscript><button class="btn" type="submit">ОК</button></noscript>
         </form>
+      </td>
+      <td data-label="Действия" class="tickets__actions">
+        <a class="btn btn--sm" href="/tickets/{{ t.id }}" aria-label="Редактировать заявку «{{ t.title }}»">Редактировать</a>
       </td>
     </tr>
     {% endfor %}

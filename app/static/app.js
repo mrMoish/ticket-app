@@ -53,8 +53,10 @@
   // --- Смена статуса прямо в списке ---------------------------------------
   document.addEventListener('change', function (event) {
     var select = event.target;
-    if (!select.matches || !select.matches('select[data-autosubmit]')) return;
+    if (!select.matches || !select.matches('select[data-autosubmit], select[data-colorize]')) return;
+    // Цвет статуса следует за выбранным значением (и в списке, и в форме редактирования)
     select.className = select.className.replace(/status-(new|in_progress|done)/, 'status-' + select.value);
+    if (!select.hasAttribute('data-autosubmit')) return;
     var form = select.form;
     if (form.requestSubmit) form.requestSubmit(); else form.submit();
   });

@@ -77,6 +77,18 @@ input, select, textarea {
   border: 1px solid var(--border); border-radius: var(--radius);
 }
 textarea { resize: vertical; min-height: 130px; }
+
+/* Одинаковая стрелка у всех выпадающих списков во всех браузерах (нативная смещалась) */
+select {
+  -webkit-appearance: none; appearance: none;
+  padding-right: 38px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%235d6874' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 12px 8px;
+  cursor: pointer;
+}
+select:disabled { cursor: progress; }
 input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: var(--danger); }
 
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
@@ -107,13 +119,14 @@ input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="
 .tickets td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
 .tickets tbody tr:last-child td { border-bottom: 0; }
 .tickets__title { font-weight: 600; word-break: break-word; }
-.tickets__title a { text-decoration: none; }
-.tickets__title a:hover { text-decoration: underline; }
+.tickets__actions, .tickets__actions-head { text-align: right; white-space: nowrap; }
+.btn--sm { min-height: 40px; padding: 0 14px; font-size: .95rem; }
 .status-form { margin: 0; display: flex; gap: 6px; align-items: center; }
 
 /* Статусы */
 .status-select, .badge { font-weight: 600; border-radius: 999px; }
-.status-select { width: auto; min-width: 132px; min-height: 40px; padding: 6px 12px; }
+.status-select { width: auto; min-width: 150px; min-height: 40px; padding: 6px 38px 6px 14px; }
+.field .status-select { width: 100%; min-height: 44px; }
 .badge { display: inline-block; padding: 4px 12px; font-size: .9rem; }
 .status-new { color: var(--new-fg); background: var(--new-bg); border-color: transparent; }
 .status-in_progress { color: var(--progress-fg); background: var(--progress-bg); border-color: transparent; }
@@ -139,4 +152,6 @@ input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="
   .tickets td::before { content: attr(data-label); color: var(--muted); font-size: .85rem; }
   .tickets__title { font-size: 1.05rem; }
   .status-select { width: 100%; }
+  .tickets__actions { text-align: left; }
+  .tickets__actions .btn { width: 100%; }
 }
