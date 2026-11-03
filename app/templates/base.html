@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Заявки{% endblock %} · Заявки на автоматизацию</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="/">Заявки на автоматизацию</a>
+      {% if session %}
+      <div class="topbar__user">
+        <span class="user" title="{{ session.email }}">{{ session.email }}</span>
+        <form method="post" action="/logout">
+          <button class="btn btn--ghost" type="submit">Выйти</button>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+  </header>
+
+  <main class="container">
+    {% if flash %}
+    <div class="alert alert--{{ flash.kind }}" role="{{ 'alert' if flash.kind == 'error' else 'status' }}">{{ flash.text }}</div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

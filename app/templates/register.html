@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Регистрация{% endblock %}
+{% block content %}
+{% set errors = errors or {} %}
+<section class="card card--narrow">
+  <h1>Регистрация</h1>
+  {% if error %}<div class="alert alert--error" role="alert">{{ error }}</div>{% endif %}
+  <form method="post" action="/register" class="form">
+    <label class="field">
+      <span class="field__label">Электронная почта</span>
+      <input type="email" name="email" value="{{ email or '' }}" required autofocus
+             autocomplete="email" inputmode="email" autocapitalize="off"
+             {% if errors.email %}aria-invalid="true" aria-describedby="err-email"{% endif %}>
+      {% if errors.email %}<span class="field__error" id="err-email">{{ errors.email }}</span>{% endif %}
+    </label>
+    <label class="field">
+      <span class="field__label">Пароль <small class="muted">(не короче 8 символов)</small></span>
+      <input type="password" name="password" required minlength="8" autocomplete="new-password"
+             {% if errors.password %}aria-invalid="true" aria-describedby="err-password"{% endif %}>
+      {% if errors.password %}<span class="field__error" id="err-password">{{ errors.password }}</span>{% endif %}
+    </label>
+    <label class="field">
+      <span class="field__label">Повторите пароль</span>
+      <input type="password" name="password2" required minlength="8" autocomplete="new-password"
+             {% if errors.password2 %}aria-invalid="true" aria-describedby="err-password2"{% endif %}>
+      {% if errors.password2 %}<span class="field__error" id="err-password2">{{ errors.password2 }}</span>{% endif %}
+    </label>
+    <button class="btn btn--primary btn--block" type="submit" data-saving-text="Создаём аккаунт…">Создать аккаунт</button>
+  </form>
+  <p class="muted">Уже есть аккаунт? <a href="/login">Войти</a></p>
+</section>
+{% endblock %}

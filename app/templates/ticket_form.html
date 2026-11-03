@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% set is_edit = (mode == "edit") %}
+{% block title %}{{ "Заявка" if is_edit else "Новая заявка" }}{% endblock %}
+{% block content %}
+{% set errors = errors or {} %}
+<nav class="crumbs"><a href="/tickets">← К списку заявок</a></nav>
+
+<section class="card">
+  <h1>{{ "Редактирование заявки" if is_edit else "Новая заявка" }}</h1>
+
+  {% if is_edit %}
+  <p class="muted meta">
+    Создана <time data-local datetime="{{ ticket.created_at|dt_iso }}">{{ ticket.created_at|dt_text }}</time>
+    · обновлена <time data-local datetime="{{ ticket.updated_at|dt_iso }}">{{ ticket.updated_at|dt_text }}</time>
+  </p>
+  {% endif %}
+
+  {% if error %}<div class="alert alert--error" role="alert">{{ error }}</div>{% endif %}
+  {% if errors %}<div class="alert alert--error" role="alert">Проверьте форму: не все поля заполнены корректно.</div>{% endif %}
+
+  <form method="post" action="{{ '/tickets/' ~ ticket.id if is_edit else '/tickets' }}" class="form">
+    {% if not is_edit %}<input type="hidden" name="client_id" value="{{ client_id }}">{% endif %}
+
+    <label class="field">
+      <span class="field__label">Название</span>
+      <input type="text" name="title" value="{{ form.title or '' }}" required maxlength="200"
+             placeholder="Например: бот для приёма заказов"
+             {% if errors.title %}aria-invalid="true" aria-describedby="err-title"{% endif %}>
+      {% if errors.title %}<span class="field__error" id="err-title">{{ errors.title }}</span>{% endif %}
+    </label>
+
+    <label class="field">
+      <span class="field__label">Описание задачи</span>
+      <textarea name="description" rows="6" required maxlength="5000"
+                placeholder="Что нужно автоматизировать и какой результат ожидается"
+                {% if errors.description %}aria-invalid="true" aria-describedby="err-description"{% endif %}>{{ form.description or '' }}</textarea>
+      {% if errors.description %}<span class="field__error" id="err-description">{{ errors.description }}</span>{% endif %}
+    </label>
+
+    <div class="grid-2">
+      <label class="field">
+        <span class="field__label">Категория</span>
+        <select name="category" required {% if errors.category %}aria-invalid="true" aria-describedby="err-category"{% endif %}>
+          <option value="" {% if not form.category %}selected{% endif %} disabled>Выберите категорию</option>
+          {% for code, label in categories.items() %}
+          <option value="{{ code }}" {% if code == form.category %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+        {% if errors.category %}<span class="field__error" id="err-category">{{ errors.category }}</span>{% endif %}
+      </label>
+
+      {% if is_edit %}
+      <label class="field">
+        <span class="field__label">Статус</span>
+        <select name="status" required {% if errors.status %}aria-invalid="true" aria-describedby="err-status"{% endif %}>
+          {% for code, label in statuses.items() %}
+          <option value="{{ code }}" {% if code == form.status %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+        {% if errors.status %}<span class="field__error" id="err-status">{{ errors.status }}</span>{% endif %}
+      </label>
+      {% else %}
+      <div class="field">
+        <span class="field__label">Статус</span>
+        <p class="static-value"><span class="badge status-new">Новая</span> <small class="muted">присваивается автоматически</small></p>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="actions">
+      <button class="btn btn--primary" type="submit" data-saving-text="Сохраняем…">
+        {{ "Сохранить изменения" if is_edit else "Создать заявку" }}
+      </button>
+      <a class="btn btn--ghost" href="/tickets">Отмена</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

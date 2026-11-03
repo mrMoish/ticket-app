@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Вход{% endblock %}
+{% block content %}
+<section class="card card--narrow">
+  <h1>Вход</h1>
+  {% if error %}<div class="alert alert--error" role="alert">{{ error }}</div>{% endif %}
+  <form method="post" action="/login" class="form">
+    <label class="field">
+      <span class="field__label">Электронная почта</span>
+      <input type="email" name="email" value="{{ email or '' }}" required autofocus
+             autocomplete="email" inputmode="email" autocapitalize="off">
+    </label>
+    <label class="field">
+      <span class="field__label">Пароль</span>
+      <input type="password" name="password" required autocomplete="current-password">
+    </label>
+    <button class="btn btn--primary btn--block" type="submit" data-saving-text="Входим…">Войти</button>
+  </form>
+  <p class="muted">Нет аккаунта? <a href="/register">Зарегистрироваться</a></p>
+</section>
+{% endblock %}
