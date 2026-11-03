@@ -120,7 +120,7 @@ input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="
 .tickets tbody tr:last-child td { border-bottom: 0; }
 .tickets__title { font-weight: 600; word-break: break-word; }
 .tickets__actions {
-  text-align: center;
+  text-align: left;
   white-space: nowrap;
 }
 
