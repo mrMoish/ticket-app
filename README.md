@@ -10,11 +10,8 @@
 1. **Supabase.** Создайте проект на [supabase.com](https://supabase.com).
 2. **Схема.** Dashboard → SQL Editor → вставьте содержимое [`supabase/schema.sql`](supabase/schema.sql) → Run.
    Скрипт создаёт таблицу `tickets`, ограничения, триггер и политики RLS. Его можно запускать повторно.
-3. **Почта (по желанию).** Authentication → Providers → Email → *Confirm email*.
-   Для быстрого теста выключите: тогда после регистрации пользователь сразу входит. Если оставить включённой,
-   приложение попросит подтвердить почту по письму — оба варианта поддержаны.
-4. **Ключи.** Project Settings → API: скопируйте `Project URL` и публичный ключ (`anon` или `sb_publishable_…`).
-5. **Приложение:**
+3. **Ключи.** Project Settings → API: скопируйте `Project URL` и публичный ключ (`anon` или `sb_publishable_…`).
+4. **Приложение:**
 
 ```bash
 cp .env.example .env        # впишите SUPABASE_URL и SUPABASE_ANON_KEY
